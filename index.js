@@ -117,18 +117,21 @@ mesg.innerHTML = `<span> Message *</span>`
 const textarea = document.createElement('textarea')
 textarea.cols = "40"
 textarea.rows = "5"
+textarea.maxLength = "300"
 let text_error = document.createElement("p")
 text_error.style.color = "red"
 mesg.appendChild(textarea)
 
 // checkbox
+const teamdiv = document.createElement('div')
+
 const team = document.createElement('label')
 team.className = "team"
 const checkbox = document.createElement('input')
 checkbox.type = "checkbox"
 team.innerHTML = `<p> I consent to being contacted by the team </p>`
 team.prepend(checkbox)
-
+teamdiv.append(team)
 let check_box_error = document.createElement("p")
 check_box_error.style.color = "red"
 // 
@@ -144,11 +147,23 @@ form.appendChild(fdiv)
 form.appendChild(emlab)
 form.appendChild(sdiv)
 form.appendChild(mesg)
-form.appendChild(team)
+form.appendChild(teamdiv)
 form.appendChild(Btn)
 
 section.append(form)
 
+
+function toast(){
+  toast_box = document.createElement('div')
+  toast_box.className = "toast"
+  toast_box.innerHTML = `
+  <h3 class='toast_title'><img src='/assets/images/icon-success-check.svg' alt='toast icon' class='toast_img'> Message Sent!</h3>
+  <p class='toast_content'>Thanks for completing the form. We'll be in touch soon!</p>
+  `
+  section.prepend(toast_box)
+}
+
+// toast()
 
 function val (e) {
   e.preventDefault();
@@ -164,17 +179,47 @@ function val (e) {
     l_error.innerHTML = " This field is required"
     flab2.appendChild(l_error)
   }
-  if (email.value == ""){
+  if (email.value == "" || !email.value.includes("@")) {
     email.style.borderColor = "red"
     e_error.innerHTML = "Please enter a valid email address"
     emlab.append(e_error)
   }
   const selected = document.querySelectorAll("input[name='query']:checked")
-  if (!selected){
+  if (selected.length === 0){
     query_error.innerHTML = "Please select a query type"
     sdiv.append(query_error)
   }
+  if (textarea.value === ""){
+    text_error.innerHTML = "This field is required"
+    mesg.append(text_error)
+  }
+
+  const check = document.querySelectorAll("input[type='checkbox']:checked")
+
+  if (check.length === 0){
+    check_box_error.innerHTML = "This field is required"
+    teamdiv.append(check_box_error)
+  }
+
+  if (
+    fname.value !== "" &&
+    lname.value !== "" &&
+    email.value !== "" &&
+    email.value.includes("@") &&
+    selected.length > 0 &&
+    textarea.value !== "" &&
+    check.length > 0
+  ){
+    fname.value = ""
+    lname.value = ""
+    email.value = ""
+    selected.length = 0
+    textarea.value = 0
+    check.length = 0
+    toast()
+  }
 }
+
 
 // val()
 

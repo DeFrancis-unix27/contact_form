@@ -10,16 +10,18 @@
     height: 100vh;
     place-items: center;
     place-content: center;
+    display: grid;
+    gap: 13px;
 }
 form{
-    width: 430px;
-    height: 450px;
+    width:fit-content;
+    height: fit-content;
     background-color: hsl(0, 0%, 100%);
     padding: 15px;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    gap: 13px;
+    gap:13px;
 }
 
 form h1{
@@ -29,7 +31,7 @@ form h1{
 }
 .fdiv{
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     gap: 12px;
 }
 .fdiv label p{
@@ -120,4 +122,37 @@ form h1{
     background-color: hsl(169, 82%, 27%);
     border-radius: 9px;
     cursor: pointer;
+}
+
+.toast{
+    width: 300px;
+    background-color: hsl(187, 24%, 22%);
+    color:white;
+    padding: 9px;
+    border-radius: 10px;
+    font-size: 12px;
+    text-align: left;
+    font-family: "Poppins",sans-serif;
+    transition:cubic-bezier(0.785, 0.135, 0.15, 0.86);
+    transition-duration: 1000ms;
+}
+
+.toast_img{
+    width: 12px;
+}
+
+@media screen and (width:360px) {
+    .main_body{
+        padding-inline: 40px;
+    }
+    form{
+        border:1px solid black;
+    }
+    .fdiv{
+        display: grid;
+    }
+    .fdiv label input{
+        width:100%;
+    }
+
 }
